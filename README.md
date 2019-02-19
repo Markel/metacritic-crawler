@@ -25,6 +25,6 @@ Scrapy has his own command line tool, you **shouldn't** use the default Python S
 4. Run the command ```scrapy runspider analyze.py``` which will create the database games.db. To complete this process is calculated that it will take around 2 hours.
 
 ## Meta
-Markel F- – [@Markel_f](https://twitter.com/Markel_f) – markelf@protonmail.com (Please include ```Github - Metacritic Crawler``` on the subject of the email)  
+Markel F- – [@Markel_f](https://twitter.com/Markel_f)
 Distributed under the BSD license. See ``LICENSE`` for more information.  
 [https://github.com/MarkelFe](https://github.com/MarkelFe)  
