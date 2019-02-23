@@ -1,22 +1,24 @@
 # This file gets the information of the games you have collected previously on games.py
-# The file is not prepared and needs formatting before starting this script
-# You must replace all the '{"f": "' for 'https://www.metacritic.com' and also you must remove all the '"}' (The final file should have an standard URL per line)
-# Once this is ready you can run the program using 'scrapy runspider analyze.py'
+# The program runs using 'scrapy runspider analyze.py'
 # This file should take around 2 hours to completed
 # This file is NOT a final build, expect MANY bugs, especially skipping games crawl.
-## Remember that you MUST comply with the point 11.13 of the terms of use in Metacritic (https://www.cbsinteractive.com/legal/cbsi/terms-of-use), you need the permission of Cbs Interactive to run any kind of scraping (this is a scraping tool if you didn't know it btw)
-## You bear all responsibility about the use of this program
+# Remember that you MUST comply with the point 11.13 of the terms of use in Metacritic (https://www.cbsinteractive.com/legal/cbsi/terms-of-use), you need the permission of Cbs Interactive to run any kind of scraping (this is a scraping tool if you didn't know it btw)
+# You bear all responsibility about the use of this program
 
 import scrapy
 import win32api
 from time import sleep
 import sqlite3
 from sqlite3 import Error
+import re
 
 ## ---------------------------OPEN GAME LINKS FILE------------------------------
 
+def parse_url(route):
+    return 'https://www.metacritic.com' + re.findall(r'\"(.+?)\"', route)[1]
+
 with open ("gm.jl", "r") as myfile:
-    games_list=myfile.readlines()
+    games_list = [parse_url(line) for line in myfile]
     
 ## -------------------------------SQLITE STUFF----------------------------------
 
