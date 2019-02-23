@@ -47,4 +47,4 @@ class ListSpider(scrapy.Spider):
             )
 
 # This message is for user that try to use the default Python Shell
-print('Hey, are you using the correct tool? Spoiler: read setup.md')
+print('Hey, are you using the correct tool? Spoiler: read README.md')
