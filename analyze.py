@@ -28,7 +28,7 @@ mycursor = cnn.cursor()
 
 # Create the games table (named data)
 sql_new_table = '''create table data
-(title text not null, platform text not null, company text not null, release text not null, description text not null, metascore integer not null, critics_desc text not null, critics_count integer not null, user_score real not null, user_desc text not null, user_count integer not null, players text not null, rating text not null)'''
+(title text, platform text, company text, release text, description text, metascore integer, critics_desc text, critics_count integer, user_score real, user_desc text, user_count integer, players text, rating text)'''
 mycursor.execute(sql_new_table)
 
 cnn.commit()
@@ -46,9 +46,9 @@ class DetailsSpider(scrapy.Spider):
         ## Title
         t = response.css('.product_title a.hover_none h1 ::text').extract_first()
         ## Platform
-        p = response.css('.product_title span.platform ::text').extract_first()
+        p = response.css('.product_title span.platform ::text').extract_first().strip()
         ## Company
-        c = response.css('div.product_data ul.summary_details li.publisher span.data a ::text').extract_first()
+        c = response.css('div.product_data ul.summary_details li.publisher span.data a ::text').extract_first().strip()
         ## Release Date
         r = response.css('div.product_data ul.summary_details li.release_data span.data  ::text').extract_first()
         ## Game description
@@ -56,7 +56,7 @@ class DetailsSpider(scrapy.Spider):
         ## Metascore
         cs = response.css('.metascore_w span ::text').extract_first()
         ## Critics Description
-        cd = response.css('div.summary p span.desc ::text').extract_first()
+        cd = response.css('div.summary p span.desc ::text').extract_first().strip()
         ## Critics Count
         cn = response.css('div.summary p span.count a span ::text').extract_first()
         ## User Score
