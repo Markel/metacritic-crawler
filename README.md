@@ -6,7 +6,7 @@ As defined in the [Terms of Use](https://www.cbsinteractive.com/legal/cbsi/terms
 PD.: If CBS Interactive contacts with me to retire this crawler I will definitely retire the repository.
 
 ## Description
-These tools are designed for creating a SQLite file with different kind of data that you can extract from [Metacritic](https://www.metacritic.com). You won't find the result of the crawl, like a databse, as this data is protected by copyright apart from that we don't have the permission from CBS to crawl their website.
+These tools are designed for creating a SQLite file with different kind of data that you can extract from [Metacritic](https://www.metacritic.com). You won't find the result of the crawl, like a database, as this data is protected by copyright apart from that we don't have the permission from CBS to crawl their website.
 
 ## Requisites
 **[Python 3.X](https://www.python.org/downloads/)** (preferably +3.7)  
@@ -21,8 +21,8 @@ These tools are designed for creating a SQLite file with different kind of data 
 Scrapy has his own command line tool, you **shouldn't** use the default Python Shell.
 1. Download the repository and travel to the repository folder throught your OS Command Line Tool
 2. Run the following command ```scrapy runspider games.py -o gm.jl``` which will create a file called gm.jl. This file will include the links to all the Metacritic games, the process of completing this file will take between 40 and 80 minutes.
-3. You must replace all the ```{"f": "``` for ```https://www.metacritic.com``` and also you must remove all the ```"}``` (The final file should have an standard URL per line). We recommend using a text editor tool that would allow to do all these changes at the say time.
-4. Run the command ```scrapy runspider analyze.py``` which will create the database games.db. To complete this process is calculated that it will take around 2 hours.
+3. Run the command ```scrapy runspider analyze.py``` which will create the database games.db. To complete this process is calculated that it will take around 2 hours.
+4. Done! The file ```games.db```  includes all the information. Use your prefered SQLite reader.
 
 ## Meta
 Markel F- – [@Markel_f](https://twitter.com/Markel_f)
