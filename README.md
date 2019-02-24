@@ -24,6 +24,14 @@ Scrapy has his own command line tool, you **shouldn't** use the default Python S
 3. Run the command ```scrapy runspider analyze.py``` which will create the database games.db. To complete this process is calculated that it will take around 2 hours.
 4. Done! The file ```games.db```  includes all the information. Use your prefered SQLite reader.
 
+## Example
+This is an example of the result of running these scripts. The first line is the variable names of [analyze.py](https://github.com/MarkelFe/metacritic-crawler/blob/master/analyze.py). The second line includes the information from the game [Tetris DS](https://www.metacritic.com/game/ds/tetris-ds).
+
+|   title   | platform |  company |    release   |          description          | metascore |         critics_desc        | critics_count | user_score |          user_desc          | user_count |  players  | rating |
+|:---------:|:--------:|:--------:|:------------:|:-----------------------------:|:---------:|:---------------------------:|:-------------:|:----------:|:---------------------------:|:----------:|:---------:|:------:|
+|     t     |     p    |     c    |       r      |               d               |     cs    |              cd             |       cn      |     us     |              ud             |     un     |     pl    |   rt   |
+| Tetris DS |    DS    | Nintendo | Mar 20, 2006 | 10 DS players can battle(...) |     84    | Generally favorable reviews |       56      |     8.0    | Generally favorable reviews | 54 Ratings | 4  Online |    E   |
+
 ## Meta
 Markel F- – [@Markel_f](https://twitter.com/Markel_f)
 Distributed under the BSD license. See ``LICENSE`` for more information.  
