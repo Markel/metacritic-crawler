@@ -13,20 +13,25 @@ from time import sleep
 
 class ListSpider(scrapy.Spider):
     name = "list"
-    start_urls = ['https://www.metacritic.com/browse/games/score/metascore/all/all/filtered?page=0']
 
 ## ----------------------------GETTING GAMES URLs-------------------------------
+    # We define the arguments, more information in PR #16
+    def __init__(self, start_page=0, delay=3, items_per_page=100, **kwargs):
+        self.start_urls = [f'https://www.metacritic.com/browse/games/score/metascore/all/all/filtered?page={start_page}']
+        # We declare delay and "i_p_p" generally outside the variable as we will need it later
+        self.delay = int(delay)
+        self.items_per_page = int(items_per_page)
+        super().__init__(**kwargs)
 
     def parse(self, response):
-        #Limit the range because it helps (be sure)
-        x = 0
-        for x in range(0, 100):
+        num_of_games_on_page = len(response.css('.product_title a::attr(href)').extract())
+        end = num_of_games_on_page if num_of_games_on_page <= self.items_per_page else self.items_per_page
+
+        for x in range(0, end):
            yield {
              #Extracts the link of the game
              'f': response.css('.product_title a::attr(href)')[x].extract()
             }
-           x = x + 1
-#          print('Game number:', x) #Debug option
 
 ## ---------------------------FOLLOW TO THE NEXT PAGE-------------------------
 
@@ -34,17 +39,11 @@ class ListSpider(scrapy.Spider):
         NEXT_PAGE_SELECTOR = '.next a ::attr(href)'
         next_page = response.css(NEXT_PAGE_SELECTOR).extract_first()
         
-        # Reducing the load in the Metacritic's servers (do you have permission to crawl?)
-        print('Continuing to in 10 seconds:', next_page)
-        sleep(10)
-
         # Travelling to the next page :D
-        # Side note: When you reach the last page some bugs occur... 
         if next_page:
-            yield scrapy.Request(
-                response.urljoin(next_page),
-                callback=self.parse
-            )
+            print(f'Continuing to {next_page} in {self.delay} seconds')
+            sleep(self.delay)
+            yield scrapy.Request(response.urljoin(next_page))
 
 # This message is for user that try to use the default Python Shell
 print('Hey, are you using the correct tool? Spoiler: read README.md')
