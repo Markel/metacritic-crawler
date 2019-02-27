@@ -12,8 +12,6 @@ These tools are designed for creating a SQLite file with different kind of data 
 **[Python 3.X](https://www.python.org/downloads/)** (preferably +3.7)  
 **[Scrapy:](https://scrapy.org/)**
 ```$ pip install scrapy```  
-**Win32api:**
-```$ pip install pypiwin32```
 
 ## Usage
 [![forthebadge](https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com)  
