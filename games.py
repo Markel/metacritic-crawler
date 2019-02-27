@@ -6,7 +6,6 @@
 ## You bear all responsibility about the use of this program 
 
 import scrapy
-import win32api
 from time import sleep
 
 ## ----------------------------CREATING THE SPIDER------------------------------
@@ -28,7 +27,7 @@ class ListSpider(scrapy.Spider):
         end = num_of_games_on_page if num_of_games_on_page <= self.items_per_page else self.items_per_page
 
         for x in range(0, end):
-           yield {
+            yield {
              #Extracts the link of the game
              'f': response.css('.product_title a::attr(href)')[x].extract()
             }

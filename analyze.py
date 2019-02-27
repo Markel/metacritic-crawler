@@ -6,7 +6,6 @@
 # You bear all responsibility about the use of this program
 
 import scrapy
-import win32api
 from time import sleep
 import sqlite3
 from sqlite3 import Error
