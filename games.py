@@ -23,20 +23,20 @@ class ListSpider(scrapy.Spider):
         super().__init__(**kwargs)
 
     def parse(self, response):
-        num_of_games_on_page = len(response.css('.product_title a::attr(href)').extract())
+        num_of_games_on_page = len(response.css('.product_title a::attr(href)').getall())
         end = num_of_games_on_page if num_of_games_on_page <= self.items_per_page else self.items_per_page
 
         for x in range(0, end):
             yield {
              #Extracts the link of the game
-             'f': response.css('.product_title a::attr(href)')[x].extract()
+             'f': response.css('.product_title a::attr(href)')[x].get()
             }
 
 ## ---------------------------FOLLOW TO THE NEXT PAGE-------------------------
 
         ## TIP: You can define the selector in a variable and later use it instead of the inline code, although it's not necessary
         NEXT_PAGE_SELECTOR = '.next a ::attr(href)'
-        next_page = response.css(NEXT_PAGE_SELECTOR).extract_first()
+        next_page = response.css(NEXT_PAGE_SELECTOR).get()
         
         # Travelling to the next page :D
         if next_page:

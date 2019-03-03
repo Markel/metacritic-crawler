@@ -37,39 +37,41 @@ cnn.commit()
 
 ## ----------------------------DEFINING THE SPIDER------------------------------
 
+def extract_value(res, text_path):
+    value = res.css(text_path).get()
+    return value if value is None else value.strip()
+
 class DetailsSpider(scrapy.Spider):
     name = "Details"
     start_urls = games_list
 
 ## ----------------------------------CRAWL-------------------------------------    
-
     def parse(self, response):
-        ## Title
-        t = response.css('.product_title a.hover_none h1 ::text').extract_first()
+        t = extract_value(response, '.product_title a.hover_none h1 ::text')
         ## Platform
-        p = response.css('.product_title span.platform ::text').extract_first().strip()
+        p = extract_value(response, '.product_title span.platform ::text')
         ## Company
-        c = response.css('div.product_data ul.summary_details li.publisher span.data a ::text').extract_first().strip()
+        c = extract_value(response, 'div.product_data ul.summary_details li.publisher span.data a ::text')
         ## Release Date
-        r = response.css('div.product_data ul.summary_details li.release_data span.data  ::text').extract_first()
+        r = extract_value(response, 'div.product_data ul.summary_details li.release_data span.data  ::text')
         ## Game description
-        d = response.css('div.product_details div.main_details ul.summary_details li.summary_detail span.data span.inline_collapsed span.blurb_expanded ::text').extract_first() 
+        d = extract_value(response, 'div.product_details div.main_details ul.summary_details li.summary_detail span.data span.inline_collapsed span.blurb_expanded ::text')
         ## Metascore
-        cs = response.css('.metascore_w span ::text').extract_first()
+        cs = extract_value(response, '.metascore_w span ::text')
         ## Critics Description
-        cd = response.css('div.summary p span.desc ::text').extract_first().strip()
+        cd = extract_value(response, 'div.summary p span.desc ::text')
         ## Critics Count
-        cn = response.css('div.summary p span.count a span ::text').extract_first()
+        cn = extract_value(response, 'div.summary p span.count a span ::text')
         ## User Score
-        us = response.css('div.userscore_wrap a.metascore_anchor div.user ::text').extract_first()
+        us = extract_value(response, 'div.userscore_wrap a.metascore_anchor div.user ::text')
         ## User Description
-        ud = response.css('div.userscore_wrap div.summary p span.desc ::text').extract_first()
+        ud = extract_value(response, 'div.userscore_wrap div.summary p span.desc ::text')
         ## User Count
-        un = response.css('div.userscore_wrap div.summary p span.count a ::text').extract_first()
+        un = extract_value(response, 'div.userscore_wrap div.summary p span.count a ::text')
         ## Number of players
-        pl = response.css('div.product_details div.side_details ul.summary_details li.product_players span.data ::text').extract_first()
+        pl = extract_value(response, 'div.product_details div.side_details ul.summary_details li.product_players span.data ::text')
         ## Rating (ESRB)
-        rt = response.css('div.product_details div.side_details ul.summary_details li.product_rating span.data ::text').extract_first() 
+        rt = extract_value(response, 'div.product_details div.side_details ul.summary_details li.product_rating span.data ::text')
         
 ## --------------------------INSERT DATA INTO THE SQL----------------------------        
 
