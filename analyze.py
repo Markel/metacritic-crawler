@@ -10,6 +10,8 @@ from time import sleep
 import sqlite3
 from sqlite3 import Error
 import re
+import os
+from tqdm import tqdm
 
 ## ---------------------------OPEN GAME LINKS FILE------------------------------
 
@@ -18,8 +20,17 @@ def parse_url(route):
 
 with open ("gm.jl", "r") as myfile:
     games_list = [parse_url(line) for line in myfile]
+    # Detect how many lines are for the loading bar
+    num_lines = 0
+    for line in games_list:
+       if line.strip():
+          num_lines += 1
     
 ## -------------------------------SQLITE STUFF----------------------------------
+
+# Remove previous existing databases
+if os.path.exists("games.db"):
+    os.remove("games.db")
 
 ## Special thanks to hypertaboo for his code: https://gist.github.com/hypertaboo/4464096
 
@@ -36,51 +47,58 @@ cnn.commit()
 
 
 ## ----------------------------DEFINING THE SPIDER------------------------------
-
 def extract_value(res, text_path):
     value = res.css(text_path).get()
     return value if value is None else value.strip()
 
+pbar = tqdm(total=num_lines, desc="Scrapping", ascii=True, mininterval=0.3, unit="games")
+
 class DetailsSpider(scrapy.Spider):
     name = "Details"
     start_urls = games_list
+    custom_settings = {
+        'LOG_LEVEL': 'ERROR',
+    }
 
-## ----------------------------------CRAWL-------------------------------------    
+## ----------------------------------CRAWL-------------------------------------
     def parse(self, response):
-        t = extract_value(response, '.product_title a.hover_none h1 ::text')
-        ## Platform
-        p = extract_value(response, '.product_title span.platform ::text')
-        ## Company
-        c = extract_value(response, 'div.product_data ul.summary_details li.publisher span.data a ::text')
-        ## Release Date
-        r = extract_value(response, 'div.product_data ul.summary_details li.release_data span.data  ::text')
-        ## Game description
-        d = extract_value(response, 'div.product_details div.main_details ul.summary_details li.summary_detail span.data span.inline_collapsed span.blurb_expanded ::text')
-        ## Metascore
-        cs = extract_value(response, '.metascore_w span ::text')
-        ## Critics Description
-        cd = extract_value(response, 'div.summary p span.desc ::text')
-        ## Critics Count
-        cn = extract_value(response, 'div.summary p span.count a span ::text')
-        ## User Score
-        us = extract_value(response, 'div.userscore_wrap a.metascore_anchor div.user ::text')
-        ## User Description
-        ud = extract_value(response, 'div.userscore_wrap div.summary p span.desc ::text')
-        ## User Count
-        un = extract_value(response, 'div.userscore_wrap div.summary p span.count a ::text')
-        ## Number of players
-        pl = extract_value(response, 'div.product_details div.side_details ul.summary_details li.product_players span.data ::text')
-        ## Rating (ESRB)
-        rt = extract_value(response, 'div.product_details div.side_details ul.summary_details li.product_rating span.data ::text')
-        
+            ## Title
+            ti = extract_value(response, '.product_title a.hover_none h1 ::text')
+            ## Platform 
+            p = extract_value(response, '.product_title span.platform ::text')
+            ## Company
+            c = extract_value(response, 'div.product_data ul.summary_details li.publisher span.data a ::text')
+            ## Release Date
+            r = extract_value(response, 'div.product_data ul.summary_details li.release_data span.data  ::text')
+            ## Game description
+            d = extract_value(response, 'div.product_details div.main_details ul.summary_details li.summary_detail span.data span.inline_collapsed span.blurb_expanded ::text')
+            ## Metascore
+            cs = extract_value(response, '.metascore_w span ::text')
+            ## Critics Description
+            cd = extract_value(response, 'div.summary p span.desc ::text')
+            ## Critics Count
+            cn = extract_value(response, 'div.summary p span.count a span ::text')
+            ## User Score
+            us = extract_value(response, 'div.userscore_wrap a.metascore_anchor div.user ::text')
+            ## User Description
+            ud = extract_value(response, 'div.userscore_wrap div.summary p span.desc ::text')
+            ## User Count
+            un = extract_value(response, 'div.userscore_wrap div.summary p span.count a ::text')
+            ## Number of players
+            pl = extract_value(response, 'div.product_details div.side_details ul.summary_details li.product_players span.data ::text')
+            ## Rating (ESRB)
+            rt = extract_value(response, 'div.product_details div.side_details ul.summary_details li.product_rating span.data ::text')
+            
 ## --------------------------INSERT DATA INTO THE SQL----------------------------        
 
-        # Establishing all the variable in one single variable
-        game_d = [(t, p, c, r, d, cs, cd, cn, us, ud, un, pl, rt)]
+            # Establishing all the variable in one single variable
+            game_d = [(ti, p, c, r, d, cs, cd, cn, us, ud, un, pl, rt)]
 
-        # Inserting the data on the SQL database
-        mycursor.executemany('''insert into data values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', game_d)
-        cnn.commit()
+            # Inserting the data on the SQL database
+            mycursor.executemany('''insert into data values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', game_d)
+            cnn.commit()
+            # Update the progress bar
+            pbar.update(1)
 
 ##------- DEBUGGING OPTIONS ------ ##
 ##        print(game_d)
