@@ -1,4 +1,4 @@
-# Metacritic Crawler
+# Metacritic Crawler [![Python version](https://img.shields.io/badge/python-%E2%89%A53.6-blue.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/downloads/) [![Travis (.com)](https://img.shields.io/travis/com/MarkelFe/metacritic-crawler.svg?logo=travis-ci&logoColor=white&style=flat-square)](https://travis-ci.com/MarkelFe/metacritic-crawler)
 Tools for crawling data from metacritic.com (for educational purposes)
 
 **IMPORTANT NOTE:**
@@ -10,9 +10,9 @@ These tools are designed for creating a SQLite file with [different kind of data
 
 ## Requisites
 You can install all this packages with ```pip install -r requirements.txt``` or you can manually install them.
-**[Python >=3.6](https://www.python.org/downloads/)** (preferably +3.7)  
-**[Scrapy >=1.6.0](https://scrapy.org/)** ```pip install scrapy```  
-**[Tqdm >= 4.31.1](https://github.com/tqdm/tqdm)** ```pip install tqdm```
+**[Python ≥3.6](https://www.python.org/downloads/)** (preferably ≥3.7)  
+**[Scrapy ≥1.6.0](https://scrapy.org/)** ```pip install scrapy```  
+**[Tqdm ≥4.31.1](https://github.com/tqdm/tqdm)** ```pip install tqdm```
 
 ## Usage
 Scrapy has his own command line tool, you **shouldn't** use the default Python Shell.
