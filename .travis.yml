@@ -1,0 +1,21 @@
+dist: xenial
+language: python
+
+sudo: required
+
+jobs:
+  include:
+    - python: '3.6'
+    - python: '3.7.2'
+    - python: nightly
+    - python: pypy3.5-5.10.1
+
+notifications:
+  email: false
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - scrapy runspider games.py -o gm.jl -a items_per_page=15 -s CLOSESPIDER_PAGECOUNT=1
+  - scrapy runspider analyze.py

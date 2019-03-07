@@ -10,7 +10,7 @@ These tools are designed for creating a SQLite file with [different kind of data
 
 ## Requisites
 You can install all this packages with ```pip install -r requirements.txt``` or you can manually install them.
-**[Python 3.X](https://www.python.org/downloads/)** (preferably +3.7)  
+**[Python >=3.6](https://www.python.org/downloads/)** (preferably +3.7)  
 **[Scrapy >=1.6.0](https://scrapy.org/)** ```pip install scrapy```  
 **[Tqdm >= 4.31.1](https://github.com/tqdm/tqdm)** ```pip install tqdm```
 
