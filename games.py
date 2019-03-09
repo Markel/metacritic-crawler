@@ -23,13 +23,13 @@ class ListSpider(scrapy.Spider):
         super().__init__(**kwargs)
 
     def parse(self, response):
-        num_of_games_on_page = len(response.css('.product_title a::attr(href)').getall())
+        num_of_games_on_page = len(response.css('.product_wrap > .product_title a::attr(href)').getall())
         end = num_of_games_on_page if num_of_games_on_page <= self.items_per_page else self.items_per_page
 
         for x in range(0, end):
             yield {
              #Extracts the link of the game
-             'f': response.css('.product_title a::attr(href)')[x].get()
+             'f': response.css('.product_wrap > .product_title a::attr(href)')[x].get()
             }
 
 ## ---------------------------FOLLOW TO THE NEXT PAGE-------------------------
