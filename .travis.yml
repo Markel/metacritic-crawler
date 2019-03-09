@@ -15,7 +15,11 @@ notifications:
 
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
 
 script:
   - scrapy runspider games.py -o gm.jl -a items_per_page=15 -s CLOSESPIDER_PAGECOUNT=1
   - scrapy runspider analyze.py
+
+afterinstall:
+  - coveralls
