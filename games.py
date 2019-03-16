@@ -1,8 +1,7 @@
 ## This file creates an spider that gets the links of all the games
-## For that it uses the best games page of Metacritic which has all the games (around 15K on December 2018)
+## For that it uses the best games page of Metacritic which has all the games (around 16K on March 2019)
 ## It usually takes between 40 and 80 minutes to make a complete run
 ## To run it use the command 'scrapy runspider games.py -o gm.jl'
-## Remember that you MUST comply with the point 11.13 of the terms of use in Metacritic (https://www.cbsinteractive.com/legal/cbsi/terms-of-use), you need the permission of Cbs Interactive to run any kind of scraping (this is a scraping tool if you didn't know it btw)
 ## You bear all responsibility about the use of this program 
 
 import scrapy

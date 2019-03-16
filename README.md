@@ -2,8 +2,7 @@
 Tools for crawling data from metacritic.com (for educational purposes)
 
 **IMPORTANT NOTE:**
-As defined in the [Terms of Use](https://www.cbsinteractive.com/legal/cbsi/terms-of-use#Acceptable_Use) in point 11.13 is forbidden to *Engage in unauthorized spidering, “scraping,” data mining or harvesting of Content, or use any other unauthorized automated means to gather data from or about the Services*. So this repository is completely educational for people learn how to use Scrapy and by any means you have permission to use this repository for scraping metacritic or using as a reference or any kind of assist. You agree not to use this repository for any purpose that would violate [CBS Interactive's Terms of Use](https://www.cbsinteractive.com/legal/cbsi/terms-of-use). Please [contact with Metacritic](https://www.metacritic.com/contact-us) if you want to request permission for crawling their website. You bear all responsibility about the use of this program. Remember again that this program is designed for educational purposes (that the reason of so many commentaries).
-PD.: If CBS Interactive contacts with me to retire this crawler I will definitely retire the repository.
+Is under your responsibility that you respect the [Terms of Use of Metacritic](https://www.cbsinteractive.com/legal/cbsi/terms-of-use#Acceptable_Use), especially the point 11.13
 
 ## Description
 These tools are designed for creating a SQLite file with [different kind of data](https://github.com/MarkelFe/metacritic-crawler/blob/master/README.md#example) that extracts from [Metacritic](https://www.metacritic.com). You won't find the result of the crawl, like a database, as this data is protected by copyright apart from that the content varies very frequently. For more information of how it works [check out this.](https://github.com/MarkelFe/metacritic-crawler/blob/master/README.md#method)
@@ -17,11 +16,11 @@ You can install all this packages with ```pip install -r requirements.txt``` or 
 ## Usage
 Scrapy has his own command line tool, you **shouldn't** use the default Python Shell.
 0. Be sure that you have Python 3 installed.
-1. [Download the repository](https://github.com/MarkelFe/metacritic-crawler/releases) and travel to the repository folder throught your OS Command Line Tool
+1. [Download the repository](https://github.com/MarkelFe/metacritic-crawler/releases) and travel to the repository folder through your OS Command Line Tool
 2. Install all the requirements with ```pip install -r requirements.txt```
 3. Run the following command ```scrapy runspider games.py -o gm.jl``` which will create a file called gm.jl. This file will include the links to all the Metacritic games, the process of completing this file will take around 40-80 minutes. You can [modify some parameters inline](https://github.com/MarkelFe/metacritic-crawler/blob/master/docs/flags.md)
 4. Run the command ```scrapy runspider analyze.py``` which will create the database games.db. To complete this process, it will take around 2 hours.
-5. Done! The file ```games.db```  includes all the information. Use your prefered SQLite reader.
+5. Done! The file ```games.db```  includes all the information. Use your preferred SQLite reader.
 
 ## Modifiers
 These modifiers are for [`games.py`](https://github.com/MarkelFe/metacritic-crawler/blob/master/games.py) and should be placed after the command `scrapy runspider games.py -o gm.jl`. 
@@ -36,7 +35,7 @@ These modifiers are for [`games.py`](https://github.com/MarkelFe/metacritic-craw
 *Represents the last game page. Verify the latest page number [here](https://www.metacritic.com/browse/games/score/metascore/all/all/filtered).
 
 ## Method
-The process consists on 2 files, the first, ```games.py```, runs through [this page](https://www.metacritic.com/browse/games/score/metascore/all/all/filtered) and collects all the data on a file called games.jl. After, ```analyze.py``` uses this list of games and goes to every single page and gets the details of all the games. These details are converted to a SQLite database, this process occurs while new pages are being scraped, so do not hesitate about stopping the script (note: for how scrapy works it may take a while to stop, as it waits until the loaded pages are scrapped).
+The process consists of 2 files, the first, ```games.py```, runs through [this page](https://www.metacritic.com/browse/games/score/metascore/all/all/filtered) and collects all the data on a file called games.jl. After, ```analyze.py``` uses this list of games and goes to every single page and gets the details of all the games. These details are converted to a SQLite database, this process occurs while new pages are being scraped, so do not hesitate about stopping the script (note: for how scrapy works it may take a while to stop, as it waits until the loaded pages are scrapped).
 
 ## Example
 This is an example of the result of running these scripts. The first line is the variable names of [analyze.py](https://github.com/MarkelFe/metacritic-crawler/blob/master/analyze.py). The second line includes the information from the game [Tetris DS](https://www.metacritic.com/game/ds/tetris-ds).
