@@ -1,4 +1,4 @@
-# Metacritic Crawler [![Python version](https://img.shields.io/badge/python-%E2%89%A53.6-blue.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/downloads/) [![Travis (.com)](https://img.shields.io/travis/com/MarkelFe/metacritic-crawler.svg?logo=travis-ci&logoColor=white&style=flat-square)](https://travis-ci.com/MarkelFe/metacritic-crawler)
+# Metacritic Crawler [![Python version](https://img.shields.io/badge/python-%E2%89%A53.6-blue.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/downloads/) [![Travis (.com)](https://img.shields.io/travis/com/MarkelFe/metacritic-crawler/master.svg?logo=travis-ci&logoColor=white&style=flat-square)](https://travis-ci.com/MarkelFe/metacritic-crawler)
 Tools for crawling data from metacritic.com (for educational purposes)
 
 **IMPORTANT NOTE:**
@@ -22,6 +22,18 @@ Scrapy has his own command line tool, you **shouldn't** use the default Python S
 3. Run the following command ```scrapy runspider games.py -o gm.jl``` which will create a file called gm.jl. This file will include the links to all the Metacritic games, the process of completing this file will take around 40-80 minutes. You can [modify some parameters inline](https://github.com/MarkelFe/metacritic-crawler/blob/master/docs/flags.md)
 4. Run the command ```scrapy runspider analyze.py``` which will create the database games.db. To complete this process, it will take around 2 hours.
 5. Done! The file ```games.db```  includes all the information. Use your prefered SQLite reader.
+
+## Modifiers
+These modifiers are for [`games.py`](https://github.com/MarkelFe/metacritic-crawler/blob/master/games.py) and should be placed after the command `scrapy runspider games.py -o gm.jl`. 
+
+|          Options         | Values |        Description             | Default value |
+|:-------------------------:|:------:|:---------------------------------------------------------:|:-------------:|
+|       -a start_page=      | 0-161* | Page number to begin scrape |       0       |
+|         -a delay=         |   0-∞  |            Delay between page scrapes            |       3       |
+|     -a items_per_page=    |  1-100 |     Number of games to scrape per page    |      100      |
+| -s CLOSESPIDER_PAGECOUNT= | 1-161* |              Number of pages to scrape              |      161*     |
+
+*Represents the last game page. Verify the latest page number [here](https://www.metacritic.com/browse/games/score/metascore/all/all/filtered).
 
 ## Method
 The process consists on 2 files, the first, ```games.py```, runs through [this page](https://www.metacritic.com/browse/games/score/metascore/all/all/filtered) and collects all the data on a file called games.jl. After, ```analyze.py``` uses this list of games and goes to every single page and gets the details of all the games. These details are converted to a SQLite database, this process occurs while new pages are being scraped, so do not hesitate about stopping the script (note: for how scrapy works it may take a while to stop, as it waits until the loaded pages are scrapped).
