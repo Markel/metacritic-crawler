@@ -8,10 +8,6 @@ import scrapy
 from time import sleep
 from tqdm import tqdm
 
-## -------------------------CREATING THE "LOADING" BAR--------------------------
-
-pbar = tqdm(desc="Pages scrapped", ascii=True, mininterval=0.3, unit=" pages")
-
 ## ----------------------------CREATING THE SPIDER------------------------------
 
 class ListSpider(scrapy.Spider):
@@ -20,7 +16,7 @@ class ListSpider(scrapy.Spider):
         'LOG_LEVEL': 'ERROR',
     }
 
-## ----------------------------GETTING GAMES URLs-------------------------------
+## ----------------------------DEFINING THE SPIDER------------------------------ 
 
     # We define the arguments, more information in PR #16
     def __init__(self, start_page=0, delay=3, items_per_page=100, **kwargs):
@@ -28,18 +24,28 @@ class ListSpider(scrapy.Spider):
         # We declare delay and "i_p_p" generally outside the variable as we will need it later
         self.delay = int(delay)
         self.items_per_page = int(items_per_page)
+        self.start_page = int(start_page)
         super().__init__(**kwargs)
-    
-    # Get the last page number
-    # last_page_num = int(('.last_page a ::text').get())
+
+## ----------------------------GETTING GAMES URLs-------------------------------  
 
     def parse(self, response):
+        ## Creating the loading bar!
+        # We need the last number for ETA
+        last_page_num = int(response.css('.last_page a ::text').get())
+        # We check the page in which we are for as we only need to summon the loading bar in the first page
+        current_page = int(response.css('.active_page span ::text').get()) - 1
+        if current_page == self.start_page:
+            self.pbar = tqdm(total=last_page_num - self.start_page, desc="Listing games", ascii=True, unit="page")
+
+        ## The scrapping  
+        # System for items_per_page to work
         num_of_games_on_page = len(response.css('.product_wrap > .product_title a::attr(href)').getall())
         end = num_of_games_on_page if num_of_games_on_page <= self.items_per_page else self.items_per_page
 
         for x in range(0, end):
             yield {
-             #Extracts the link of the game
+             #Extracts the link of the game and stores it
              'f': response.css('.product_wrap > .product_title a::attr(href)')[x].get()
             }
 
@@ -49,7 +55,7 @@ class ListSpider(scrapy.Spider):
         NEXT_PAGE_SELECTOR = '.next a ::attr(href)'
         next_page = response.css(NEXT_PAGE_SELECTOR).get()
         ## Increase the completed value
-        pbar.update(1)
+        self.pbar.update(1)
         
         # Travelling to the next page :D
         if next_page:
