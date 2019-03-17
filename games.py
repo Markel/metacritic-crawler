@@ -6,13 +6,22 @@
 
 import scrapy
 from time import sleep
+from tqdm import tqdm
+
+## -------------------------CREATING THE "LOADING" BAR--------------------------
+
+pbar = tqdm(desc="Pages scrapped", ascii=True, mininterval=0.3, unit=" pages")
 
 ## ----------------------------CREATING THE SPIDER------------------------------
 
 class ListSpider(scrapy.Spider):
     name = "list"
+    custom_settings = {
+        'LOG_LEVEL': 'ERROR',
+    }
 
 ## ----------------------------GETTING GAMES URLs-------------------------------
+
     # We define the arguments, more information in PR #16
     def __init__(self, start_page=0, delay=3, items_per_page=100, **kwargs):
         self.start_urls = [f'https://www.metacritic.com/browse/games/score/metascore/all/all/filtered?page={start_page}']
@@ -20,6 +29,9 @@ class ListSpider(scrapy.Spider):
         self.delay = int(delay)
         self.items_per_page = int(items_per_page)
         super().__init__(**kwargs)
+    
+    # Get the last page number
+    # last_page_num = int(('.last_page a ::text').get())
 
     def parse(self, response):
         num_of_games_on_page = len(response.css('.product_wrap > .product_title a::attr(href)').getall())
@@ -36,12 +48,10 @@ class ListSpider(scrapy.Spider):
         ## TIP: You can define the selector in a variable and later use it instead of the inline code, although it's not necessary
         NEXT_PAGE_SELECTOR = '.next a ::attr(href)'
         next_page = response.css(NEXT_PAGE_SELECTOR).get()
+        ## Increase the completed value
+        pbar.update(1)
         
         # Travelling to the next page :D
         if next_page:
-            print(f'Continuing to {next_page} in {self.delay} seconds')
             sleep(self.delay)
             yield scrapy.Request(response.urljoin(next_page))
-
-# This message is for user that try to use the default Python Shell
-print('Hey, are you using the correct tool? Spoiler: read README.md')
