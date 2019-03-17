@@ -5,7 +5,7 @@ Tools for crawling data from metacritic.com (for educational purposes)
 Is under your responsibility that you respect the [Terms of Use of Metacritic](https://www.cbsinteractive.com/legal/cbsi/terms-of-use#Acceptable_Use), especially the point 11.13
 
 ## Description
-These tools are designed for creating a SQLite file with [different kind of data](https://github.com/MarkelFe/metacritic-crawler/blob/master/README.md#example) that extracts from [Metacritic](https://www.metacritic.com). You won't find the result of the crawl, like a database, as this data is protected by copyright apart from that the content varies very frequently. For more information of how it works [check out this.](https://github.com/MarkelFe/metacritic-crawler/blob/master/README.md#method)
+These tools are designed for creating a SQLite file with [different kind of data](#example) that extracts from [Metacritic](https://www.metacritic.com). You won't find the result of the crawl, like a database, as this data is protected by copyright apart from that the content varies very frequently. For more information of how it works [check out this.](#method)
 
 ## Requisites
 You can install all this packages with ```pip install -r requirements.txt``` or you can manually install them.
@@ -18,7 +18,7 @@ Scrapy has his own command line tool, you **shouldn't** use the default Python S
 0. Be sure that you have Python 3 installed.
 1. [Download the repository](https://github.com/MarkelFe/metacritic-crawler/releases) and travel to the repository folder through your OS Command Line Tool
 2. Install all the requirements with ```pip install -r requirements.txt```
-3. Run the following command ```scrapy runspider games.py -o gm.jl``` which will create a file called gm.jl. This file will include the links to all the Metacritic games, the process of completing this file will take around 40-80 minutes. You can [modify some parameters inline](https://github.com/MarkelFe/metacritic-crawler/blob/master/docs/flags.md)
+3. Run the following command ```scrapy runspider games.py -o gm.jl``` which will create a file called gm.jl. This file will include the links to all the Metacritic games, the process of completing this file will take around 40-80 minutes. You can [modify some parameters inline](#modifiers)
 4. Run the command ```scrapy runspider analyze.py``` which will create the database games.db. To complete this process, it will take around 2 hours.
 5. Done! The file ```games.db```  includes all the information. Use your preferred SQLite reader.
 
