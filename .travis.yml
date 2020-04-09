@@ -6,8 +6,8 @@ sudo: required
 jobs:
   include:
     - python: '3.6'
-    - python: '3.7.2'
-    - python: pypy3.5-5.10.1
+    - python: '3.7.3'
+    - python: '3.8.2'
 
 install:
   - pip install -r requirements.txt
