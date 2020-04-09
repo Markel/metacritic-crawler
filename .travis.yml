@@ -1,7 +1,6 @@
+os: linux
 dist: xenial
 language: python
-
-sudo: required
 
 jobs:
   include:
