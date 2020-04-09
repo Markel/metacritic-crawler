@@ -2,7 +2,8 @@
 Tools for crawling data from metacritic.com (for educational purposes)
 
 **IMPORTANT NOTE:**
-Is under your responsibility that you respect the [Terms of Use of Metacritic](https://www.cbsinteractive.com/legal/cbsi/terms-of-use#Acceptable_Use), especially the point 11.13
+1. Is under your responsibility that you respect the [Terms of Use of Metacritic](https://www.cbsinteractive.com/legal/cbsi/terms-of-use#Acceptable_Use), especially the point 11.13
+2. This script uses some outdated packages (check #34).
 
 ## Description
 These tools are designed for creating a SQLite file with [different kind of data](#example) that extracts from [Metacritic](https://www.metacritic.com). You won't find the result of the crawl, like a database, as this data is protected by copyright apart from that the content varies very frequently. For more information of how it works [check out this.](#method)

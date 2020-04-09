@@ -1,2 +1,6 @@
-Scrapy >= 1.6.0
+Scrapy == 1.8.0
 tqdm >= 4.31.1
+
+# Check #34
+twisted == 19.10.0
+attrs >= 19.2.0
